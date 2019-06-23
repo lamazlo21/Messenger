@@ -5,9 +5,9 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/styles.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    <title>Messenger App</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>Document</title>
 </head>
 <body>
     <div class="wrapper">
@@ -25,25 +25,6 @@
                 </div>
             </nav>
         </header>
-        <main class="main">
-            <h2 class="main--title">
-                Available rooms
-            </h2>
-            <div class="main__rooms">
-                <% data.forEach((element)=>{ %>
-                    <div class="main__room">
-                        <div class="main__room-inside">
-                        <p class="main__room--name"><%=element.name%> room</p>
-                            <div class="main__room-users">
-                                <img class="main__room--image" src="./assets/user.svg" alt="user">
-                                <p><%=element.numberOfUsers%></p>
-                            </div>
-                        </div>
-                    </div>
-                <%})%>
-            </div>
-        </main>
     </div>
-    <script src="scripts/homepageScript.js"></script>
 </body>
 </html>

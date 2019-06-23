@@ -1,8 +1,5 @@
 const mysql = require('mysql')
 const https = require('http')
-const mime = require('mime')
-const fs = require('fs')
-const path = require('path')
 const dbFunc = require('./databaseModule/dbFunctions')
 let cache = {}
 
@@ -19,37 +16,6 @@ db.connect((err)=>{
         console.log('Database connected!')
 })
 
-let send404 = (res)=>{
-    res.writeHead(404, {'Content-Type': 'text/plain'})
-    res.end('404, it seems you\'re lost')
-}
-
-let sendFile = (res, filePath, fileContent)=>{
-    res.writeHead(200, {'Content-Type': mime.getType(path.basename(filePath))})
-    res.end(fileContent)
-}
-
-let staticFiles = (res, cache, absPath)=>{
-    if(cache[absPath]) {
-        sendFile(res, absPath, cache[absPath])
-    }else{
-        fs.access(absPath,(err => {
-            if(!err){
-                fs.readFile(absPath, (err, data)=>{
-                    if(err)
-                        send404(res)
-                    else {
-                        cache[absPath] = data;
-                        sendFile(res, absPath, data)
-                    }
-                })
-            }else
-                send404(res)
-        }))
-    }
-}
-
-
 
 const server = https.createServer((req, res)=>{
     switch(req.method){
@@ -60,23 +26,23 @@ const server = https.createServer((req, res)=>{
 
         case 'GET':
             let filePath = '.';
-            templateData = [];
+
             switch(req.url){
                 case '/':
-                    console.log(dbFunc.getAllRooms(db))
                     filePath += '/public/index.ejs'
+                    dbFunc.getAllRooms(db, res, cache, filePath)
                     break;
                 case '/signup':
-                    filePath += '/public/pages/signup.js';
+                    filePath += '/public/pages/signup.ejs';
                     break;
                 case '/signin':
-                    filePath += '/public/pages/signin.js';
+                    filePath += '/public/pages/signin.ejs';
                     break;
                 default:
                     filePath += '/public'+req.url;
+                    dbFunc.staticFiles(res,cache,filePath)
                     break;
             }
-            staticFiles(res,cache,filePath)
             break;
 
     }

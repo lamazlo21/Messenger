@@ -56,10 +56,50 @@ body{
 .main--title{
     color: #8900FF;
     font-size: 2rem;
-    margin-bottom: 20px;
 }
 
 .main__rooms{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main__room{
+    box-sizing: border-box;
+    margin-top: 20px;
+    flex-basis: 150px;
+    height: 80px;
+    border: 1px solid #8900FF;
+    margin-right: 0;
+}
+
+.main__room:first-child{
+    margin-left: 0;
+}
+
+.main__room-inside{
+    box-sizing: border-box;
+    width:92%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+.main__room--name{
+    text-transform: uppercase;
+}
+
+.main__room-users{
+    height: 50%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+.main__room--image{
+    height: 60%;
+    margin-right: 10px;
 }
 
 
