@@ -25,6 +25,28 @@
             </div>
         </nav>
     </header>
+    <main class="main__sign">
+        <h2 class="main--title center">
+            Sign Up
+        </h2>
+        <div class="sign">
+            <form action="/signup" method="POST" class="sign__form" name="signupForm">
+                <label for="name">Name:</label>
+                <input name="name" type="text" maxlength="50" required>
+                <label for="surname">Surname:</label>
+                <input name="surname" type="text" maxlength="50" required>
+                <label for="password">Password:</label>
+                <input name="password" type="password" maxlength="50" required>
+                <label for="password">Confirm Password:</label>
+                <input name="confirmed-password" type="password" maxlength="50" required>
+
+            </form>
+            <div class="sign__button">
+                <button class="sign__button--submit">Submit</button>
+            </div>
+        </div>
+    </main>
 </div>
+<script src="../scripts/signupScript.js"></script>
 </body>
 </html>

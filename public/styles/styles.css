@@ -102,4 +102,32 @@ body{
     margin-right: 10px;
 }
 
+.main__sign{
+    margin-top: 100px;
+}
+
+.sign{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.sign__form{
+    display: flex;
+    flex-direction: column;
+}
+
+.center{
+    text-align: center;
+}
+
+.sign__button{
+    margin-top: 10px;
+    display: flex;
+    justify-content: right;
+}
+
+.sign__button--submit{
+
+}
 
