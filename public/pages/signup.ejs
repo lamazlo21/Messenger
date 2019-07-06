@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
@@ -18,7 +19,7 @@
             </div>
             <div class="menu">
                 <div class="menu__search">
-                    <input class="menu__search--input" id="search" placeholder="Search room..." type="text">
+                   
                 </div>
                 <a class="menu__sign" href="/signin"><p class="menu__sign--text">SIGN IN</p></a>
                 <a class="menu__sign" href="/signup"><p class="menu__sign--text">SIGN UP</p></a>
@@ -29,21 +30,31 @@
         <h2 class="main--title center">
             Sign Up
         </h2>
-        <div class="sign">
-            <form action="/signup" method="POST" class="sign__form" name="signupForm">
-                <label for="name">Name:</label>
-                <input name="name" type="text" maxlength="50" required>
-                <label for="surname">Surname:</label>
-                <input name="surname" type="text" maxlength="50" required>
-                <label for="password">Password:</label>
-                <input name="password" type="password" maxlength="50" required>
-                <label for="password">Confirm Password:</label>
-                <input name="confirmed-password" type="password" maxlength="50" required>
-
+        <div class="sign" id="signupWrapper">
+                <%if(data){%>
+                    <div class="alert alert-danger" role="alert" id="signinAlert">
+                    <%=data.alert%>
+                  </div>
+                <%}%>
+            <form action="/signup" method="POST" class="sign__form" name="signupForm" id="signupForm">
+                  <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="surname">Surname</label>
+                    <input type="text" class="form-control" name="surname" placeholder="Surname">
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input type="password" class="form-control" name="confirmPassword" placeholder="Password">
+                  </div>
             </form>
-            <div class="sign__button">
-                <button class="sign__button--submit">Submit</button>
-            </div>
+            <button class="btn btn-primary" name="signupBtn" id="signupBtn">Submit</button>
         </div>
     </main>
 </div>

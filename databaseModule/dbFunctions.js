@@ -79,24 +79,62 @@ exports.getUserRooms = (db)=>{
 
 // INSERTS
 
-// ADD new user
-exports.addUser=(db, req, res, data)=>{
-    parseData(req,(data)=> {
-        bcrypt.genSalt(saltRounds, (err, salt) => {
-            bcrypt.hash(data.password[0], salt, (erro, hash) => {
-                db.query('INSERT INTO `Users`(name, surname, hashed_pass, status) ' +
-                    'VALUES (?,?,?,?)',
-                    [data.name, data.surname, hash, 0], (error) => {
-                        res.writeHead(200,  {'Content-Type': 'text/plain'})
-                        if (err)
-                            throw error;
-                        res.end()
-                    }
-                )
-            })
-        })
+let userExists = (db, req, res, name, cb)=>{
+    db.query('SELECT name FROM `Users` WHERE name = ?',[name],
+    (err, result, fields)=>{
+        if(err)
+            throw err;
+        if(result.length>0)
+            cb(db, req, res)
     })
 }
+
+// ADD new user
+exports.addUser=(db, req, res, cache, filePath)=>{
+    parseData(req,(data)=> {
+        db.query('SELECT name FROM `Users` WHERE name = ?',[data.name],
+        (err, result, fields)=>{
+            if(err)
+                throw err;
+            if(result.length==0){
+                bcrypt.hash(data.password[0], saltRounds, (err, hash) => {
+                    db.query('INSERT INTO `Users`(name, surname, hashed_pass, status) ' +
+                        'VALUES (?,?,?,?)',
+                        [data.name, data.surname, hash, 0], (error) => {
+                            res.writeHead(200,  {'Content-Type': 'text/plain'})
+                            if (error)
+                                throw error;
+                            res.end()
+                        }
+                    )
+            })
+        }else{
+            const message = {alert: 'User with this name already exists'}
+            exports.staticFiles(res,cache,filePath, message)
+        }})
+})}
+
+exports.findUser=(db,req,res, cache, filePath)=>{
+    parseData(req,(data)=>{
+        db.query('SELECT hashed_pass FROM `Users` WHERE name = ?',[data.name],
+        (err, result, fields)=>{
+            if(err)
+                throw err;
+            const message = {alert: 'Particular user dosen\'t exists'}
+            if(result.length>0){
+                bcrypt.compare(data.password,result[0].hashed_pass,(err, isEqual)=>{
+                console.log(isEqual)
+                if(isEqual==false){
+                    exports.staticFiles(res,cache,filePath, message)
+                }else{
+                    
+                }
+            })
+            }else{
+                    exports.staticFiles(res,cache,filePath, message)
+            }
+    })
+})}
 
 
 
