@@ -3,7 +3,7 @@ const https = require('http')
 const mime = require('mime')
 const fs = require('fs')
 const path = require('path')
-//const dbFunc = require('databaseModule/dbFunctions')
+const dbFunc = require('./databaseModule/dbFunctions')
 let cache = {}
 
 const db = mysql.createConnection(({
@@ -60,24 +60,22 @@ const server = https.createServer((req, res)=>{
 
         case 'GET':
             let filePath = '.';
+            templateData = [];
             switch(req.url){
                 case '/':
-                    filePath += '/index'
+                    console.log(dbFunc.getAllRooms(db))
+                    filePath += '/public/index.ejs'
                     break;
                 case '/signup':
-                    filePath += '/signup';
+                    filePath += '/public/pages/signup.js';
                     break;
                 case '/signin':
-                    filePath += '/signin';
-                    break;
-                case '/rooms':
-                    filePath += '/rooms';
+                    filePath += '/public/pages/signin.js';
                     break;
                 default:
-                    filePath += req.url;
+                    filePath += '/public'+req.url;
                     break;
             }
-            console.log(filePath)
             staticFiles(res,cache,filePath)
             break;
 
@@ -85,11 +83,12 @@ const server = https.createServer((req, res)=>{
 })
 
 
-db.end((err)=>{
-    if(err)
-        console.log('Database cannot be closed!')
-})
+//db.end((err)=>{
+    //if(err)
+    //    console.log('Database cannot be closed!')
+  //  console.log('Database closed!')
+//})
 
-server.listen(3100, ()=>{
+server.listen(3001, ()=>{
     console.log('Server listen to port 3100!')
 })
