@@ -2,6 +2,23 @@ const fs = require('fs')
 const ejs = require('ejs')
 const mime = require('mime')
 const path = require('path')
+const bcrypt = require('bcrypt')
+const qs = require('querystring')
+const saltRounds = 10;
+
+let parseData = (req, cb)=>{
+    let body =''
+    req.setEncoding('utf-8')
+
+    req.on('data',(data)=>{
+        body +=data;
+    })
+
+    req.on('end',()=>{
+        let data = qs.parse(body)
+        cb(data)
+    })
+}
 
 let send404 = (res)=>{
     res.writeHead(404, {'Content-Type': 'text/plain'})
@@ -59,4 +76,27 @@ exports.getUserRooms = (db)=>{
         return result
     })
 }
+
+// INSERTS
+
+// ADD new user
+exports.addUser=(db, req, res, data)=>{
+    parseData(req,(data)=> {
+        bcrypt.genSalt(saltRounds, (err, salt) => {
+            bcrypt.hash(data.password[0], salt, (erro, hash) => {
+                db.query('INSERT INTO `Users`(name, surname, hashed_pass, status) ' +
+                    'VALUES (?,?,?,?)',
+                    [data.name, data.surname, hash, 0], (error) => {
+                        res.writeHead(200,  {'Content-Type': 'text/plain'})
+                        if (err)
+                            throw error;
+                        res.end()
+                    }
+                )
+            })
+        })
+    })
+}
+
+
 

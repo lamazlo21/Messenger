@@ -19,9 +19,13 @@ db.connect((err)=>{
 
 const server = https.createServer((req, res)=>{
     switch(req.method){
-
         case 'POST':
 
+            switch(req.url){
+                case '/signup':
+                    dbFunc.addUser(db, req, res)
+                break;
+            }
             break;
 
         case 'GET':
@@ -32,12 +36,17 @@ const server = https.createServer((req, res)=>{
                     filePath += '/public/index.ejs'
                     dbFunc.getAllRooms(db, res, cache, filePath)
                     break;
+
                 case '/signup':
                     filePath += '/public/pages/signup.ejs';
+                    dbFunc.staticFiles(res,cache,filePath)
                     break;
+
                 case '/signin':
                     filePath += '/public/pages/signin.ejs';
+                    dbFunc.staticFiles(res,cache,filePath)
                     break;
+
                 default:
                     filePath += '/public'+req.url;
                     dbFunc.staticFiles(res,cache,filePath)
