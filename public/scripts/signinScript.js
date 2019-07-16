@@ -1,13 +1,10 @@
-const signUp = document.getElementById('signupBtn');
-const signupWrapper = document.getElementById('signupWrapper')
+const signIn = document.getElementById('signinBtn');
+const signinWrapper = document.getElementById('signinWrapper')
+const signinForm = document.forms['signinForm']
+const form = document.getElementById('signinForm')
+const password = signinForm['password']
+const name = signinForm['name']
 const wrapper = document.querySelector('.wrapper')
-const signupForm = document.forms['signupForm']
-const form = document.getElementById('signupForm')
-const password = signupForm['password']
-const confirmedPassword = signupForm['confirmPassword']
-const name = signupForm['name']
-const surname = signupForm['surname']
-
 let alerts = []
 
 let createWarning = (alertText)=>{
@@ -16,7 +13,7 @@ let createWarning = (alertText)=>{
     div.setAttribute('id', 'warning')
     div.setAttribute('class', 'alert alert-danger')
     div.setAttribute('role','alert')
-    signupWrapper.insertBefore(div, form)
+    signinWrapper.insertBefore(div, form)
 }
 
 let removeWarning = ()=>{
@@ -35,25 +32,19 @@ let formValidity = ()=>{
     alerts = []
     if(name.value == '')
         alerts.push('Name string cannot be empty')
-    if(surname.value == '')
-        alerts.push('Surname string cannot be empty')
     if(password.value.length < 8)
         alerts.push('Password string has to have at least 8 characters ')
-    if(confirmedPassword.value != password.value)
-        alerts.push('Passwords don\'t match')
     if(alerts.length != 0)
         return false
     return true
 }
 
-signUp.addEventListener('click', ()=>{
+signIn.addEventListener('click', ()=>{
     removeWarning()
     if(formValidity()){
-            signupForm.submit();
+            signinForm.submit();
             password.value = ''
-            confirmedPassword.value = ''
             name.value = ''
-            surname.value = ''
     }
     else
         alerts.forEach((alert)=>{
@@ -61,4 +52,4 @@ signUp.addEventListener('click', ()=>{
         })
 })
 
-signupForm.addEventListener('click',removeWarning)
+signinForm.addEventListener('click',removeWarning)

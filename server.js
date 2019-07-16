@@ -18,19 +18,22 @@ db.connect((err)=>{
 
 
 const server = https.createServer((req, res)=>{
+    let filePath = '.';
     switch(req.method){
         case 'POST':
-
             switch(req.url){
                 case '/signup':
-                    dbFunc.addUser(db, req, res)
-                break;
+                    filePath += '/public/pages/signup.ejs';
+                    dbFunc.addUser(db, req, res, cache, filePath)
+                    break;
+                case '/signin':
+                    filePath += '/public/pages/signin.ejs';
+                    dbFunc.findUser(db, req, res, cache, filePath)
+                    break;
             }
             break;
 
         case 'GET':
-            let filePath = '.';
-
             switch(req.url){
                 case '/':
                     filePath += '/public/index.ejs'
@@ -64,6 +67,6 @@ const server = https.createServer((req, res)=>{
   //  console.log('Database closed!')
 //})
 
-server.listen(3001, ()=>{
+server.listen(3002, ()=>{
     console.log('Server listen to port 3100!')
 })
