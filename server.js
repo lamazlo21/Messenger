@@ -34,10 +34,11 @@ const server = https.createServer((req, res)=>{
             break;
 
         case 'GET':
-            switch(req.url){
+            let obj = dbFunc.extractRoomName(req.url)
+            switch(obj.url){
                 case '/':
                     filePath += '/public/index.ejs'
-                    dbFunc.getAllRooms(db, res, cache, filePath)
+                    dbFunc.getAllRooms(db,req, res, cache, filePath)
                     break;
 
                 case '/signup':
@@ -47,6 +48,16 @@ const server = https.createServer((req, res)=>{
 
                 case '/signin':
                     filePath += '/public/pages/signin.ejs';
+                    dbFunc.staticFiles(res,cache,filePath)
+                    break;
+
+                case '/chat':
+                    filePath += '/public/pages/chat.ejs';
+                    dbFunc.getMessages(db, res, cache, filePath, obj.roomId)
+                    break;
+
+                case '/signupcomplete':
+                    filePath += '/public/pages/signupComplete.ejs';
                     dbFunc.staticFiles(res,cache,filePath)
                     break;
 

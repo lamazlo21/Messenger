@@ -15,7 +15,7 @@
         <header class="header">
             <nav class="nav">
                 <div class="logo">
-                    <img class="logo--logo" src="./assets/logo.svg" alt="Bubble chat">
+                    <a  href="/"><img class="logo--logo" src="./assets/logo.svg" alt="Bubble chat"></a>
                 </div>
                 <div class="menu">
                     <div class="menu__search">
@@ -38,12 +38,12 @@
                     <%}%>
                 <form method="POST" action="/signin" class="sign__form" name="signinForm" id="signinForm">
                         <div class="form-group">
-                          <label for="name">Name</label>
-                          <input type="text" class="form-control" name="name" placeholder="Name">
+                          <label for="name">Login</label>
+                          <input type="text" class="form-control" name="name" placeholder="Login">
                         </div>
                         <div class="form-group">
                           <label for="password">Password</label>
-                          <input type="password" class="form-control" id="password" placeholder="Password">
+                          <input type="password" class="form-control" name="password" placeholder="Password">
                         </div>
                         <div class="form-group form-check">
                           <input type="checkbox" class="form-check-input" name="rememberme">

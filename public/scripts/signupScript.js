@@ -6,7 +6,6 @@ const form = document.getElementById('signupForm')
 const password = signupForm['password']
 const confirmedPassword = signupForm['confirmPassword']
 const name = signupForm['name']
-const surname = signupForm['surname']
 
 let alerts = []
 
@@ -34,9 +33,7 @@ let removeWarning = ()=>{
 let formValidity = ()=>{
     alerts = []
     if(name.value == '')
-        alerts.push('Name string cannot be empty')
-    if(surname.value == '')
-        alerts.push('Surname string cannot be empty')
+        alerts.push('Login string cannot be empty')
     if(password.value.length < 8)
         alerts.push('Password string has to have at least 8 characters ')
     if(confirmedPassword.value != password.value)
@@ -53,7 +50,6 @@ signUp.addEventListener('click', ()=>{
             password.value = ''
             confirmedPassword.value = ''
             name.value = ''
-            surname.value = ''
     }
     else
         alerts.forEach((alert)=>{

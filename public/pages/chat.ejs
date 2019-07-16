@@ -4,9 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 </head>
 <body>
-    
+    <div class="wrapper chat-wrapper">
+        <h1 class="chat--room-name">Pokój</h1>
+        <section class="chat">
+            <div class="messages">
+                <%data.forEach((element)=>{%>
+                    <div class="messages__wrapper">
+                        <p class="messages--content"><%=element.content%></p>
+                    </div>
+               <% })%>
+            </div>
+            <form action="" class="sign__form chat-form" name="signinForm" id="signinForm">
+                        <div class="form-group">
+                          <input type="text" class="form-control" name="name" placeholder="Message...">
+                        </div>
+                </form>
+                <button class="btn btn-primary btn-chat" id="signinBtn">Submit</button>
+        </section>
+    </div>
 </body>
 </html>
